@@ -25,6 +25,13 @@ python -m PyInstaller --onefile --windowed --name silent_task_runner --add-data 
 
 '''
 
+import os
+from PyQt5.QtCore import QLibraryInfo
+
+os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = QLibraryInfo.location(
+    QLibraryInfo.PluginsPath
+)
+
 from silent_task_runner.program import main
 
 if __name__ == "__main__":

@@ -88,10 +88,8 @@ DEFAULT_TASKS_CONTENT = [
     }
 ]
 
-if not os.path.exists(TASKS_PATH):
-    os.makedirs(os.path.dirname(TASKS_PATH), exist_ok=True)
-    with open(TASKS_PATH, "w", encoding="utf-8") as f:
-        json.dump(DEFAULT_TASKS_CONTENT, f, indent=4, ensure_ascii=False)
+configure.verify_default_config(TASKS_PATH, default_content=DEFAULT_TASKS_CONTENT)
+
 
 # ---------------------------------------
 
@@ -104,9 +102,7 @@ def load_tasks():
 
 
 def save_tasks(tasks):
-    with open(TASKS_PATH, "w", encoding="utf-8") as f:
-        json.dump(tasks, f, indent=4, ensure_ascii=False)
-
+    configure.save_config(TASKS_PATH, tasks)
 
 # ---------- UI ----------
 class Scheduler(QWidget):
