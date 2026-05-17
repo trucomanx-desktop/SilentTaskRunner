@@ -4,18 +4,46 @@ import json
 
 def merge_defaults(config, defaults):
     """
-    Adiciona valores de defaults que não existam em config.
-    Funciona recursivamente para dicionários aninhados.
+    Faz merge recursivo entre config e defaults.
+
+    Regras:
+    - dict: adiciona chaves faltantes
+    - list: faz merge item a item por índice
+    - outros tipos: mantém config existente
     """
+
     changed = False
 
-    for key, value in defaults.items():
-        if key not in config:
-            config[key] = value
-            changed = True
-        elif isinstance(value, dict) and isinstance(config[key], dict):
-            if merge_defaults(config[key], value):
+    # -------------------------
+    # DICT
+    # -------------------------
+    if isinstance(defaults, dict) and isinstance(config, dict):
+
+        for key, value in defaults.items():
+
+            if key not in config:
+                config[key] = value
                 changed = True
+
+            else:
+                if merge_defaults(config[key], value):
+                    changed = True
+
+    # -------------------------
+    # LIST
+    # -------------------------
+    elif isinstance(defaults, list) and isinstance(config, list):
+
+        for i, default_item in enumerate(defaults):
+
+            # adiciona itens faltantes
+            if i >= len(config):
+                config.append(default_item)
+                changed = True
+
+            else:
+                if merge_defaults(config[i], default_item):
+                    changed = True
 
     return changed
 
@@ -30,7 +58,9 @@ def verify_default_config(path, default_content=None):
         default_content = {}
 
     # Garante que os diretórios existam
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    conf_dir = os.path.dirname(path)
+    if conf_dir:
+        os.makedirs(conf_dir, exist_ok=True)
 
     config = {}
 
@@ -70,7 +100,10 @@ def save_config(path, content):
     """
 
     # Garante que os diretórios existam
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    conf_dir = os.path.dirname(path)
+    if conf_dir:
+        os.makedirs(conf_dir, exist_ok=True)
+    
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(content, f, ensure_ascii=False, indent=4)
 

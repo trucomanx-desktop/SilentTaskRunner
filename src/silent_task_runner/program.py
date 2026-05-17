@@ -294,7 +294,7 @@ class TrayApp(QApplication):
 
         ########################################################################
         ########################################################################
-        self.open_action = QAction(CONFIG["traymenu_open"])
+        self.open_action = QAction(QIcon(resource_path("icons", "status_circle.png")), CONFIG["traymenu_open"])
         self.open_action.triggered.connect(self.show_window)
         self.tray_menu.addAction(self.open_action)
 
@@ -303,19 +303,19 @@ class TrayApp(QApplication):
         ########################################################################
         ########################################################################
 
-        self.edit_task_action = QAction(QIcon.fromTheme("applications-utilities"), CONFIG["traymenu_task"], self)
+        self.edit_task_action = QAction(QIcon(resource_path("icons", "document-page-setup.png")), CONFIG["traymenu_task"], self)
         self.edit_task_action.triggered.connect(self.open_task_editor)
         self.tray_menu.addAction(self.edit_task_action)
 
-        self.edit_config_action = QAction(QIcon.fromTheme("applications-utilities"), CONFIG["traymenu_configure"], self)
+        self.edit_config_action = QAction(QIcon(resource_path("icons", "document-page-setup.png")), CONFIG["traymenu_configure"], self)
         self.edit_config_action.triggered.connect(self.open_configure_editor)
         self.tray_menu.addAction(self.edit_config_action)
 
-        self.coffee_action = QAction(QIcon.fromTheme("emblem-favorite"), CONFIG["traymenu_coffee"], self)
+        self.coffee_action = QAction(QIcon(resource_path("icons", "emote-love.png")), CONFIG["traymenu_coffee"], self)
         self.coffee_action.triggered.connect(self.on_coffee_action_click)
         self.tray_menu.addAction(self.coffee_action)
         
-        self.about_action = QAction(QIcon.fromTheme("help-about"), CONFIG["traymenu_about"], self)
+        self.about_action = QAction(QIcon(resource_path("icons", "status_help.png")), CONFIG["traymenu_about"], self)
         self.about_action.triggered.connect(self.open_about)
         self.tray_menu.addAction(self.about_action)
 
@@ -324,7 +324,7 @@ class TrayApp(QApplication):
         ########################################################################
         ########################################################################
 
-        self.exit_action = QAction(CONFIG["traymenu_exit"])
+        self.exit_action = QAction(QIcon(resource_path("icons", "application-exit.png")), CONFIG["traymenu_exit"])
         self.exit_action.triggered.connect(self.exit_app)
         self.tray_menu.addAction(self.exit_action)
 
